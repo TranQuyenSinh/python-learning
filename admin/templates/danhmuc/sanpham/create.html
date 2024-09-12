@@ -1,0 +1,96 @@
+{% extends "layout/base.html" %}
+{%load static%}
+{% block title %}Thêm sản phẩm{% endblock title %}
+{% block main-content %}
+<form action="{% url "sanpham.create" %}" method="POST" enctype="multipart/form-data">
+    {%csrf_token%}
+    <a href="{% url "sanpham.index" %}" class="btn btn-outline-secondary mb-4" type="submit">Trở về</a>
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Thông tin sản phẩm</h4>
+                        <div class="form-group">
+                            <input type="text" name="ten" class="form-control" placeholder="Tên">
+                        </div>
+                        <div class="form-group">
+                            <select name="loaisanpham_id" class="form-control select2">
+                                {% for l in loaisanpham %}
+                                <option value="{{ l.id }}">{{l.ten}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="css-control css-control-primary css-checkbox" for="trangthai">
+                                <input type="checkbox" class="css-control-input" id="trangthai" value="1" name="trangthai" checked> <span class="css-control-indicator"></span> Hiển thị</label>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend"><span class="input-group-text">Tải lên</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input name="image" type="file" class="custom-file-input">
+                                    <label class="custom-file-label">Hình ảnh</label>
+                                </div>
+                            </div>
+                            {% include "partials/image_preview.html" %}
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body" x-data="{
+                    units: [],
+                    addUnit() {
+                        this.units.push({ name: '', price: '' });
+                    },
+                    removeUnit(index) {
+                        this.units.splice(index, 1);
+                    }
+                }">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4 class="card-title mb-0">Đơn vị tính và giá bán</h4>
+                        <button @click="addUnit" class="btn btn-primary btn-md" type="button">
+                            <i class="fa fa-plus fa-md"></i>
+                        </button>
+                    </div>
+                    <div class="unit-container mt-4">
+                        <template x-for="(unit, index) in units" :key="index">
+                            <div class="unit-item">
+                                <input type="text" name="donvitinh" placeholder="Đơn vị tính" x-model="unit.name" class="form-control" />
+                                <input type="number" name="gia" placeholder="Giá" x-model="unit.price" class="form-control" />
+                                <button type="button" class="btn btn-danger btn-sm" @click="removeUnit(index)">
+                                    <i class="fa fa-trash"></i>
+                                </button> 
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <button class="btn btn-primary w-100" type="submit">Thêm</button>
+        </div>
+    </div>
+</form>
+
+{% endblock main-content %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/sanpham.css' %}">
+{% endblock css %}
+{% block js %}
+<script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+<script src="{% static 'plugins/alpinejs/alpinejs.min.js' %}"></script>
+<script>
+    function unitsHandler() {
+        return 123;
+    }
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>
+{% endblock js %}

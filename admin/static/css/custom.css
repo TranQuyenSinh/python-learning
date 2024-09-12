@@ -1,0 +1,19 @@
+.nav-header {
+    background-color: var(--primary);
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+}
+
+/* Select2 */
+.select2-container--default .select2-selection--single {
+    border: 1px solid #ced4da !important;
+    border-radius: 0 !important;
+}
+.select2-container .select2-selection--single {
+    height: 45px !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 45px !important;
+}

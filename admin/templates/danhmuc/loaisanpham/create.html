@@ -1,0 +1,27 @@
+{% extends "layout/base.html" %}
+{% block title %}Thêm loại sản phẩm{% endblock title %}
+{% block main-content %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Thêm loại sản phẩm</h4>
+            <form action="{% url "loaisanpham.create" %}" method="POST" enctype="multipart/form-data">
+                {%csrf_token%}
+                <div class="form-group">
+                    <input type="text" name="ten" class="form-control" placeholder="Tên">
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend"><span class="input-group-text">Tải lên</span>
+                        </div>
+                        <div class="custom-file">
+                            <input name="image" type="file" class="custom-file-input">
+                            <label class="custom-file-label">Hình ảnh</label>
+                        </div>
+                    </div>
+                    {% include "partials/image_preview.html" %}
+                </div>
+                <button class="btn btn-primary" type="submit">Thêm</button>
+            </form>
+        </div>
+    </div>
+{% endblock main-content %}

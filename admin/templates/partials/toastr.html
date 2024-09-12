@@ -1,0 +1,37 @@
+{% load static %} {% if messages %}
+<link rel="stylesheet" href="{% static 'plugins/toastr/css/toastr.min.css' %}" />
+<script src="{% static 'plugins/toastr/js/toastr.min.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let options = {
+          "closeButton": false,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-bottom-full-width",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+      }
+        {% for message in messages %}
+        var toastType = "{{ message.tags }}";
+          if (toastType === "success") {
+              toastr.success("{{ message }}", "", options);
+          } else if (toastType === "error") {
+              toastr.error("{{ message }}", "", options);
+          } else if (toastType === "warning") {
+              toastr.warning("{{ message }}", "", options);
+          } else if (toastType === "info") {
+              toastr.info("{{ message }}", "", options);
+            };
+        {% endfor %}
+    });
+</script>
+{% endif %}

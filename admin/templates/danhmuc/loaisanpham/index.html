@@ -1,0 +1,41 @@
+{% extends "layout/base.html" %} {% block title %}Loại sản phẩm{% endblock title %} {% block main-content %}
+
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between pb-4">
+            <h4 class="card-title">Thêm loại sản phẩm</h4>
+            <a href="{% url "loaisanpham.create" %}" class="btn btn-primary">Thêm</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered verticle-middle">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold">Tên</th>
+                        <th scope="col fw-bold">Hình ảnh</th>
+                        <th scope="col fw-bold">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   {% for l in page_obj %}
+                   <tr>
+                    <td>{{l.ten}}</td>
+                    <td>
+                        <img src="{{l.ImageURL}}" style="width: 50px; height: 50px;" alt="">
+                    </td>
+                    <td>
+                       <a href="{% url "loaisanpham.delete" l.id %}">
+                            <i class="fa fa-close fa-lg text-danger"></i>
+                        </a> 
+                    </td>
+                    
+                </tr>
+                   {% endfor %}
+                </tbody>
+            </table>
+
+            {% include "partials/pagination.html" %}
+        </div>
+    </div>
+</div>
+
+{% endblock main-content %}
